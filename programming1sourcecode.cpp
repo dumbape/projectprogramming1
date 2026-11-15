@@ -31,6 +31,7 @@ int main(){
 //9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9 testing values to check whether capcity check works or not
     displaymenu();
     addrecord(id,name,code,qty);
+    addrecord(id,name,code,qty);
     recordtable(id,name,code,qty);
 }
 
@@ -68,7 +69,7 @@ void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&ni
         return;
     }
     //checking free spaces
-    while (nights[arraycounter] != 0)
+    while (id[arraycounter] != "")
         arraycounter++;
 
 
@@ -133,8 +134,8 @@ void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nigh
     cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID"<< setw(30) << "STUDENT NAME" << setw(5) << "BLOCK"
     << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)"<< endl;
     line(86);
-    while (nights[recordno] != 0){
-        cout << left << fixed << setprecision(2) << setw(4) << recordno+1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] 
+    while (id[recordno] != ""){
+        cout << left << fixed << setprecision(2) << setw(5) << recordno+1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] 
         << right << setw(15) << nights[recordno] << setw(15) << nights[recordno] * RATE
         << endl;
         recordno++;
