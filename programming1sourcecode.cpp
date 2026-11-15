@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 const int MAX = 35;
@@ -12,22 +13,26 @@ const float BAND_3 =180;
     the arrays here are initialized with {} here to prevent the empty elements from being field with garbage values.
     Instead, they are filled for 0's which will make it much easier for us to insert a value.
 */ 
-string id[MAX] = {}; 
-string name[MAX] = {};
-char code[MAX] = {};
-int qty[MAX] = {};
 
-//9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9 testing values to check whether capcity check works or not
 
 void line(int i);
-void addrecord();
+void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&nights)[MAX]);
 void displaymenu();
+void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nights)[MAX]);
 
 
 
 int main(){
+    string id[MAX] = {}; 
+    string name[MAX] = {};
+    char code[MAX] = {};
+    int qty[MAX] = {};
+    
+//9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9 testing values to check whether capcity check works or not
     displaymenu();
-    addrecord();
+    addrecord(id,name,code,qty);
+    addrecord(id,name,code,qty);
+    recordtable(id,name,code,qty);
 }
 
 /*
@@ -44,7 +49,7 @@ void line(int i){
         << setfill(' ');
 }
 
-void addrecord(){
+void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&nights)[MAX]){
     /*
     This block of code under here is to fill move the input of the program to an empty array element to prevent accidentally overwriting previous 
     elements that have been written. How it works is it will run a loop where arraycounter would add up (to move from one element to the next) until it finds an element that is blank
@@ -59,12 +64,12 @@ void addrecord(){
     float tempfloat;
     //checking whether the array has already achieved max capacity
     //if true then it will exit this function with a message
-    if (qty[MAX-1] != 0){
+    if (nights[MAX-1] != 0){
         cout << "\nFULL CAPACITY\n"; 
         return;
     }
     //checking free spaces
-    while (qty[arraycounter] != 0)
+    while (nights[arraycounter] != 0)
         arraycounter++;
 
 
@@ -77,21 +82,21 @@ void addrecord(){
     id[arraycounter] = tempstr;
 
     cout << "Please insert the student name: ";
-    cin >> tempstr;
+    getline(cin>> ws,tempstr);
     name[arraycounter] = tempstr;
 
     do{
         cout << "Please insert the apartment block (A-E, write in capital letters): ";
         cin >> tempchar;
-        if (tempchar <='E' && tempchar >= 'A')
-        break;
+        if (tempchar <= 'E' && tempchar >= 'A')
+            break;
+        cin.ignore(100,'\n');
+        cout << "Try again. ";
     } while (tempchar > 'E' || tempchar < 'A');
-    addrecord();
-    for(int num:qty)
-        cout << endl << num;
-    code[arraycounter] = tempchar;
+    block[arraycounter] = tempchar;
 
     do{
+    //validation
         cin.clear(); 
         cin.ignore(100000, '\n');
         cout << "Please insert the nights stayed: ";
@@ -102,7 +107,7 @@ void addrecord(){
     }while (cin.fail());
     
 
-    qty[arraycounter] = tempfloat;
+    nights[arraycounter] = tempfloat;
 
 }
 void displaymenu(){
@@ -122,5 +127,14 @@ void displaymenu(){
         cout << setw(3) << left << i+1 << "." << menuarray[i] << "\n";
     }
     line(30);
+}
 
+void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nights)[MAX]){
+    int recordno = 0;
+    while (nights[recordno] != 0){
+        cout << left << setw(4) << recordno+1<<"." << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] 
+        << right << setw(5) << nights[recordno] << setw(8) << nights[recordno] * RATE
+        << endl;
+        recordno++;
+    }
 }
