@@ -31,7 +31,6 @@ int main(){
 //9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9 testing values to check whether capcity check works or not
     displaymenu();
     addrecord(id,name,code,qty);
-    addrecord(id,name,code,qty);
     recordtable(id,name,code,qty);
 }
 
@@ -105,8 +104,6 @@ void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&ni
             break;
         cout << "Try again. ";
     }while (cin.fail());
-    
-
     nights[arraycounter] = tempfloat;
 
 }
@@ -131,10 +128,17 @@ void displaymenu(){
 
 void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nights)[MAX]){
     int recordno = 0;
+    line(86);
+    cout << endl;
+    cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID"<< setw(30) << "STUDENT NAME" << setw(5) << "BLOCK"
+    << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)"<< endl;
+    line(86);
     while (nights[recordno] != 0){
-        cout << left << setw(4) << recordno+1<<"." << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] 
-        << right << setw(5) << nights[recordno] << setw(8) << nights[recordno] * RATE
+        cout << left << fixed << setprecision(2) << setw(4) << recordno+1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] 
+        << right << setw(15) << nights[recordno] << setw(15) << nights[recordno] * RATE
         << endl;
         recordno++;
     }
+    line(86);
+    cout << endl;
 }
