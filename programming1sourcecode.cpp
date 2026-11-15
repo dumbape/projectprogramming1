@@ -23,7 +23,7 @@ void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nigh
 
 
 int main(){
-    string id[MAX] = {}; 
+    string id[MAX] = {"9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9"}; 
     string name[MAX] = {};
     char code[MAX] = {};
     int qty[MAX] = {};
@@ -31,7 +31,7 @@ int main(){
 //9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9 testing values to check whether capcity check works or not
     displaymenu();
     addrecord(id,name,code,qty);
-    addrecord(id,name,code,qty);
+
     recordtable(id,name,code,qty);
 }
 
@@ -64,7 +64,7 @@ void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&ni
     float tempfloat;
     //checking whether the array has already achieved max capacity
     //if true then it will exit this function with a message
-    if (nights[MAX-1] != 0){
+    if (id[ MAX-1   ] != ""){
         cout << "\nFULL CAPACITY\n"; 
         return;
     }
@@ -88,10 +88,10 @@ void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&ni
     do{
         cout << "Please insert the apartment block (A-E, write in capital letters): ";
         cin >> tempchar;
-        if (tempchar <= 'E' && tempchar >= 'A')
-            break;
-        cin.ignore(100,'\n');
-        cout << "Try again. ";
+        if (tempchar > 'E' || tempchar < 'A'){
+            cin.ignore(100000, '\n');
+            cout << "Try again. ";
+        }
     } while (tempchar > 'E' || tempchar < 'A');
     block[arraycounter] = tempchar;
 
@@ -101,9 +101,8 @@ void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&ni
         cin.ignore(100000, '\n');
         cout << "Please insert the nights stayed: ";
         cin >> tempfloat;
-        if (cin.good())
-            break;
-        cout << "Try again. ";
+        if (cin.fail())
+            cout << "Try again. ";
     }while (cin.fail());
     nights[arraycounter] = tempfloat;
 
@@ -131,12 +130,10 @@ void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nigh
     int recordno = 0;
     line(86);
     cout << endl;
-    cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID"<< setw(30) << "STUDENT NAME" << setw(5) << "BLOCK"
-    << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)"<< endl;
+    cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID"<< setw(30) << "STUDENT NAME" << setw(5) << "BLOCK" << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)"<< endl;
     line(86);
-    while (id[recordno] != ""){
-        cout << left << fixed << setprecision(2) << setw(5) << recordno+1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] 
-        << right << setw(15) << nights[recordno] << setw(15) << nights[recordno] * RATE
+    while (id[recordno] != "" || recordno < MAX){
+        cout << left << fixed << setprecision(2) << setw(5) << recordno+1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] << right << setw(15) << nights[recordno] << setw(15) << nights[recordno] * RATE
         << endl;
         recordno++;
     }
