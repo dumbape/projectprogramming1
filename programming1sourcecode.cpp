@@ -54,8 +54,23 @@ int main() {
 
         if (index == -1)
             cout << "Student not found.\n";
-        else
+        else{
             cout << "Student found at index " << index << ".\n";
+            cout << "\nSTUDENT BOOKING RECORDS\n";
+            cout << left << setw(15) << "STUDENT ID"
+            << setw(30) << "STUDENT NAME"
+            << setw(10) << "BLOCK"
+            << setw(15) << "NIGHTS STAYED"
+            << right << setw(15) << "FEE (RM)" << endl;
+            cout << left << setw(15) << id[index]
+            << setw(30) << name[index]
+            << setw(10) << code[index]
+            << setw(15) << qty[index]
+            << right << fixed << setprecision(2) << setw(15) << qty[index] * RATE << endl;
+        }
+            
+            
+
 
         return 0;
     }
