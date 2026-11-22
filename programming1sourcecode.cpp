@@ -19,20 +19,20 @@ void line(int i);
 void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&nights)[MAX]);
 void displaymenu();
 void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nights)[MAX]);
-
+string capitalizer(string tempstr);
+void searchstudent(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nights)[MAX]);
 
 
 int main(){
-    string id[MAX] = {"9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9"}; 
+    string id[MAX] = {}; 
     string name[MAX] = {};
     char code[MAX] = {};
     int qty[MAX] = {};
     
-//9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9 testing values to check whether capcity check works or not
+//"9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9","9" testing values to check whether capcity check works or not
     displaymenu();
     addrecord(id,name,code,qty);
-
-    recordtable(id,name,code,qty);
+    searchstudent(id,name,code,qty);
 }
 
 /*
@@ -47,6 +47,13 @@ below here are functions
 void line(int i){
         cout << setfill('-') << setw(i) << "\n"
         << setfill(' ');
+}
+string capitalizer(string tempstr){
+    for (int i = 0; i < tempstr.length(); i++) {
+    if (tempstr[i] >= 'a' && tempstr[i] <= 'z')
+        tempstr[i] = tempstr[i] - 32;
+    }
+    return tempstr;
 }
 
 void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&nights)[MAX]){
@@ -78,11 +85,13 @@ void addrecord(string (&id)[MAX],string (&name)[MAX],char (&block)[MAX],int (&ni
     The blocks of code below here are to input new data with data validation intergrated within it.
     */
     cout << "\nPlease insert the student ID: ";
-    cin >> tempstr;
+    getline(cin>> ws,tempstr);
+    tempstr = capitalizer(tempstr);
     id[arraycounter] = tempstr;
 
     cout << "Please insert the student name: ";
     getline(cin>> ws,tempstr);
+    tempstr = capitalizer(tempstr);
     name[arraycounter] = tempstr;
 
     do{
@@ -132,11 +141,36 @@ void recordtable(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nigh
     cout << endl;
     cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID"<< setw(30) << "STUDENT NAME" << setw(5) << "BLOCK" << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)"<< endl;
     line(86);
-    while (id[recordno] != "" || recordno < MAX){
+    while (id[recordno] != "" && recordno < MAX){
         cout << left << fixed << setprecision(2) << setw(5) << recordno+1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] << right << setw(15) << nights[recordno] << setw(15) << nights[recordno] * RATE
         << endl;
         recordno++;
     }
     line(86);
     cout << endl;
+}
+
+
+void searchstudent(string (id)[MAX],string (name)[MAX],char (block)[MAX],int (nights)[MAX]){
+    string temp_id;
+    int i = 0;
+    cout << "Please insert the searched student ID: ";
+    getline(cin>> ws,temp_id);
+    temp_id = capitalizer(temp_id);
+    while(temp_id !=id[i] && i < MAX)
+        i++;
+    if (temp_id == id[i]){
+        cout << "\nSEARCHED STUDENT RECORDS\n";
+        line(86);
+        cout << endl;
+        cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID"<< setw(30) << "STUDENT NAME" << setw(5) << "BLOCK" << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)"<< endl;
+        line(86);
+        cout << left << fixed << setprecision(2) << setw(5) << i+1 << setw(15) << id[i] << setw(30) << name[i] << setw(5) << block[i] << right << setw(15) << nights[i] << setw(15) << nights[i] * RATE
+        << endl;
+        line(86);
+    } else{
+        cout << "\nNO RECORDS FOUND\n";
+    }
+
+
 }
