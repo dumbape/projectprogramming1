@@ -58,8 +58,7 @@ int main() {
         if (index == -1)
             cout << "Student not found.\n";
         else{
-            cout << "Student found at index " << index << ".\n";
-            cout << "\nSTUDENT BOOKING RECORDS\n";
+            cout << "STUDENT FOUND AT INDEX " << index << ".\n";
             cout << left << setw(15) << "STUDENT ID"
             << setw(30) << "STUDENT NAME"
             << setw(10) << "BLOCK"
@@ -135,6 +134,7 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
 
     cout << "Please insert the student name: ";
     getline(cin >> ws, tempstr);
+    tempstr = capitalizer(tempstr);
     name[arraycounter] = tempstr;
 
     do {
