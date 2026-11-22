@@ -176,6 +176,12 @@ void displaymenu() {
     line(30);
 }
 
+/*
+    I noticed that recordtable() and studentinfo() both display the student records.
+    Since studentinfo() already handles this and uses count to avoid going through empty array positions,
+    I don't think we need to call recordtable() anymore.
+    I've left Adam's original function here for now so we can decide together whether to remove it later.
+*/
 void recordtable(string(id)[MAX], string(name)[MAX], char (block)[MAX], int (nights)[MAX]) {
     int recordno = 0;
     line(86);
