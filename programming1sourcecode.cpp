@@ -16,6 +16,8 @@ const float BAND_3 = 180;
 
 
 void line(int i);
+/*readded capitalizer*/
+string capitalizer(string tempstr);
 /*
     I added count to addrecord function because the program needs to know how many student records have already been added.
     I'm passing it by reference so that when a new record is saved, the updated number will also be available in main().
@@ -49,6 +51,7 @@ int main() {
         string searchID;
         cout << "\nEnter a student ID to search: ";
         cin >> searchID;
+        searchID = capitalizer(searchID);
 
         int index = searchstudent(id, count, searchID);
 
@@ -80,6 +83,13 @@ int main() {
 below here are functions
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
+string capitalizer(string tempstr){
+    for (int i = 0; i < tempstr.length(); i++) {
+    if (tempstr[i] >= 'a' && tempstr[i] <= 'z')
+        tempstr[i] = tempstr[i] - 32;
+    }
+    return tempstr;
+}
 
 /*
     function to print out line borders (too lazy to repeatedly write the same line function over and over again)
@@ -120,6 +130,7 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
     */
     cout << "\nPlease insert the student ID: ";
     cin >> tempstr;
+    tempstr = capitalizer(tempstr);
     id[arraycounter] = tempstr;
 
     cout << "Please insert the student name: ";
