@@ -58,13 +58,15 @@ int main() {
         if (index == -1)
             cout << "Student not found.\n";
         else{
-            cout << "STUDENT FOUND AT INDEX " << index << ".\n";
-            cout << left << setw(15) << "STUDENT ID"
+            cout << "STUDENT FOUND AT INDEX " << index+1 << ".\n";
+            cout << left << setw(4) << "NO."
+            << left << setw(15) << "STUDENT ID"
             << setw(30) << "STUDENT NAME"
             << setw(10) << "BLOCK"
             << setw(15) << "NIGHTS STAYED"
             << right << setw(15) << "FEE (RM)" << endl;
-            cout << left << setw(15) << id[index]
+            cout << left << setw(4) << index+1
+            << left << setw(15) << id[index]
             << setw(30) << name[index]
             << setw(10) << code[index]
             << setw(15) << qty[index]
@@ -138,8 +140,10 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
     name[arraycounter] = tempstr;
 
     do {
-        cout << "Please insert the apartment block (A-E, write in capital letters): ";
+        cout << "Please insert the apartment block(A-E): ";
         cin >> tempchar;
+    if (tempchar >= 'a' && tempchar <= 'z')
+        tempchar = tempchar - 32;
         if (tempchar > 'E' || tempchar < 'A') {
             cin.ignore(100000, '\n');
             cout << "Try again. ";
@@ -260,7 +264,8 @@ void studentinfo(const string id[], const string name[], const char code[],
     }
 
     cout << "\nSTUDENT BOOKING RECORDS\n";
-    cout << left << setw(15) << "STUDENT ID"
+    cout << left << setw(4) << "NO."
+        << left << setw(15) << "STUDENT ID"
         << setw(30) << "STUDENT NAME"
         << setw(10) << "BLOCK"
         << setw(15) << "NIGHTS STAYED"
@@ -272,8 +277,8 @@ void studentinfo(const string id[], const string name[], const char code[],
     while (i < count)
     {
         fee = qty[i] * RATE;
-
-        cout << left << setw(15) << id[i]
+        cout<< left << setw(4) << i+1
+            << left << setw(15) << id[i]
             << setw(30) << name[i]
             << setw(10) << code[i]
             << setw(15) << qty[i]
