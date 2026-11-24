@@ -22,7 +22,7 @@ int qty[MAX] = {};
 void line(int i);
 void addrecord();
 void displaymenu();
-
+void classreport();
 
 
 int main(){
@@ -123,4 +123,51 @@ void displaymenu(){
     }
     line(30);
 
+}
+void classreport(){
+    float fee;
+    string classification;
+    int num = 1;
+//This checks whether any records are found
+    if (id[0] == ""){
+        cout << "\nNo records found.\n";
+        return;
+    }
+    cout << "\nCLASSIFICATION REPORT\n";
+    line(80);
+    
+    cout << left << setw(10) << "NO"
+    << setw(15) << "STUDENT ID"
+    << setw(20) << "STUDENT NAME"
+    << right << setw(15) << "FEE (RM)"
+    << left << setw(20) << "CLASSIFICATION"
+    << endl;
+
+    line(80);
+    
+    for (int i = 0; i < MAX; i++) {
+        if (id[i] != "") {
+            fee = qty[i] * RATE;
+            if (fee >= BAND_1) {
+                classification = "Full Semester";
+            }
+            else if (fee >= BAND_2) {
+                classification = "Half Semester";
+            }
+            else if (fee >= BAND_3) {
+                classification = "Short Stay";
+            }
+            else {
+                classification = "Transit";
+            }
+            cout << left << setw(10) << num
+            << setw(15) << id[i]
+            << setw(20) << name[i]
+            << right << setw(15)
+            << fixed << setprecision(2) << fee << "  "
+            << left << setw(20) << classification << endl;
+            num++;
+        }
+    }
+    line(80);
 }
