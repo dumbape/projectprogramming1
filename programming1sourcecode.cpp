@@ -375,16 +375,18 @@ void sumreport(const string id[], const string name[], const int qty[], int coun
     }
 
     float avgFee = totalFee / count;
-
+    line(60);
     cout << "\nSUMMARY REPORT\n";
+    line(60);
     cout << left << setw(24) << "Number of bookings" << ": " << count << endl;
     cout << left << setw(24) << "Total Fee (RM)" << ": " << fixed << setprecision(2) << totalFee << endl;
     cout << left << setw(24) << "Average Fee (RM)" << ": " << fixed << setprecision(2) << avgFee << endl;
-    cout << endl;
+    line(60);
     cout << left << setw(10) << "Highest" << ": " << name[highestIdx]
          << " (" << qty[highestIdx] << " -> " << fixed << setprecision(2) << highestFee << ")" << endl;
     cout << left << setw(10) << "Lowest" << ": " << name[lowestIdx]
          << " (" << qty[lowestIdx] << " -> " << fixed << setprecision(2) << lowestFee << ")" << endl;
+    line(60);
     cout << endl;
 }
 
