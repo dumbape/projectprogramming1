@@ -49,18 +49,18 @@ int main() {
     
         while (menuvalue!= 6){
             string searchID;
-            int option;
+            int menuvalue;
             bool validoption;
             displaymenu();
             do {
                 //validation
                 cout << "Please select your menu options: ";
-                cin >> option;
+                cin >> menuvalue;
 
                 validoption = !cin.fail();
 
                 if (validoption) {
-                    if (option < 0 || option > 6 || cin.peek() != '\n')
+                    if (menuvalue < 0 || menuvalue > 6 || cin.peek() != '\n')
                         validoption = false;
                 }
 
