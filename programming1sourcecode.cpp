@@ -20,10 +20,10 @@ void line(int i);
 string capitalizer(string tempstr);
 /*
     I added count to addrecord function because the program needs to know how many student records have already been added.
-    I'm passing it by reference so that when a new record is saved, the updated number will also be available in main().
+    I'm passing it by reference so that when a new record is saved, the updated number will also be d in main().
 */
 void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nights)[MAX], int &count);
-int displaymenu();
+void displaymenu();
 void recordtable(string(id)[MAX], string(name)[MAX], char (block)[MAX], int (nights)[MAX]);
 /*
     These are the two functions I'm adding for searching student records and displaying all the records.
@@ -49,7 +49,29 @@ int main() {
     
         while (menuvalue!= 6){
             string searchID;
-            menuvalue = displaymenu();
+            int option;
+            bool validoption;
+            displaymenu();
+            do {
+                //validation
+                cout << "Please select your menu options: ";
+                cin >> option;
+
+                validoption = !cin.fail();
+
+                if (validoption) {
+                    if (option < 0 || option > 6 || cin.peek() != '\n')
+                        validoption = false;
+                }
+
+                if (!validoption) {
+                    cout << "Try again. ";
+                    cin.clear();
+                }
+
+                cin.ignore(100000, '\n');
+
+            } while (!validoption);
             switch (menuvalue)
             {
             default:
@@ -216,8 +238,7 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
     cout << "Record has been inserted\n\n";
 
 }
-int displaymenu() {
-    int option;
+void displaymenu() {
     string menuarray[6] = {
         "ADD A RECORD",
         "DISPLAY ALL RECORDS",
@@ -233,28 +254,6 @@ int displaymenu() {
         cout << setw(3) << left << i + 1 << "." << menuarray[i] << "\n";
     }
     line(30);
-    bool validoption;
-    do {
-        //validation
-        cout << "Please select your menu options: ";
-        cin >> option;
-
-        validoption = !cin.fail();
-
-        if (validoption) {
-            if (option < 0 || cin.peek() != '\n')
-                validoption = false;
-        }
-
-        if (!validoption) {
-            cout << "Try again. ";
-            cin.clear();
-        }
-
-        cin.ignore(100000, '\n');
-
-    } while (!option);
-    return option;
 
 }
 
