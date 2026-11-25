@@ -54,7 +54,7 @@ int main() {
                 validoption = !cin.fail();
 
                 if (validoption) {
-                    if (menuvalue < 0 || menuvalue > 6 || cin.peek() != '\n')
+                    if (menuvalue < 1 || menuvalue > 6 || cin.peek() != '\n')
                         validoption = false;
                 }
 
