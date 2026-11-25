@@ -4,10 +4,10 @@
 
 using namespace std;
 const int MAX = 35;
-const float RATE = 14.00;
-const float BAND_1 = 1400;
-const float BAND_2 = 700;
-const float BAND_3 = 180;
+const float RATE = 14.00f;
+const float BAND_1 = 1400.00f;
+const float BAND_2 = 700.00f;
+const float BAND_3 = 180.00f;
 
 /*
     the arrays here are initialized with {} here to prevent the empty elements from being field with garbage values.
