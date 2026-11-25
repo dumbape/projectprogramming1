@@ -32,6 +32,10 @@ void recordtable(string(id)[MAX], string(name)[MAX], char (block)[MAX], int (nig
 int searchstudent(const string id[], int count, string searchID);
 void studentinfo(const string id[], const string name[], const char code[],
     const int qty[], int count);
+void sumreport(const string id[], const string name[],
+    const int qty[], int count);
+void classreport(const string id[], const string name[],
+    const int qty[], int count);
 
 
 
@@ -47,6 +51,11 @@ int main() {
 
         cout << "\nDISPLAY ALL RECORDS\n";
         studentinfo(id, name, code, qty, count);
+
+        cout << "\n";
+        sumreport(id, name, qty, count);
+
+        classreport(id, name, qty, count);
 
         string searchID;
         cout << "\nEnter a student ID to search: ";
@@ -286,4 +295,142 @@ void studentinfo(const string id[], const string name[], const char code[],
 
         i = i + 1;
     }
+
+
+}
+
+/*
+    This function generates a summary report of the student booking records.
+    I use count to make sure the function only processes records that have
+    actually been added. It calculates the total and average nights stayed,
+    and identifies the student records with the highest and lowest nights.
+*/
+void sumreport(const string id[], const string name[],
+    const int qty[], int count)
+{
+    if (count == 0)
+    {
+        cout << "No records found" << endl;
+        return;
+    }
+
+    int totalNights = 0;
+    float averageNights = 0.0;
+    int highestNights = qty[0];
+    int lowestNights = qty[0];
+
+    for (int i = 0; i < count; i++)
+    {
+        totalNights = totalNights + qty[i];
+
+        if (qty[i] > highestNights)
+        {
+            highestNights = qty[i];
+        }
+
+        if (qty[i] < lowestNights)
+        {
+            lowestNights = qty[i];
+        }
+    }
+
+    averageNights = static_cast<float>(totalNights) / count;
+
+    cout << "\nSUMMARY REPORT\n";
+    line(50);
+
+    cout << "Total number of students: " << count << endl;
+    cout << "Total nights stayed: " << totalNights << endl;
+    cout << "Average nights stayed: " << fixed << setprecision(2)
+        << averageNights << endl;
+
+    cout << "Highest nights stayed: " << highestNights << endl;
+    cout << "Lowest nights stayed: " << lowestNights << endl;
+
+    cout << "\nStudent(s) with the highest nights:\n";
+
+    for (int i = 0; i < count; i++)
+    {
+        if (qty[i] == highestNights)
+        {
+            cout << id[i] << " - " << name[i]
+                << " (" << qty[i] << " nights)" << endl;
+        }
+    }
+
+    cout << "\nStudent(s) with the lowest nights:\n";
+
+    for (int i = 0; i < count; i++)
+    {
+        if (qty[i] == lowestNights)
+        {
+            cout << id[i] << " - " << name[i]
+                << " (" << qty[i] << " nights)" << endl;
+        }
+    }
+}
+
+/*
+    I changed the previous classreport() function to follow our current
+    program structure. Instead of using global arrays, I now pass the
+    required arrays as parameters. I also added count so the function
+    only processes records that have actually been added.
+*/
+void classreport(const string id[], const string name[],
+    const int qty[], int count)
+{
+    if (count == 0)
+    {
+        cout << "\nNo records found.\n";
+        return;
+    }
+
+    float fee;
+    string classification;
+    int num = 1;
+
+    cout << "\nCLASSIFICATION REPORT\n";
+    line(80);
+
+    cout << left << setw(10) << "NO"
+        << setw(15) << "STUDENT ID"
+        << setw(20) << "STUDENT NAME"
+        << right << setw(15) << "FEE (RM)"
+        << "  " << left << setw(20) << "CLASSIFICATION"
+        << endl;
+
+    line(80);
+    cout << endl;
+
+    for (int i = 0; i < count; i++)
+    {
+        fee = qty[i] * RATE;
+
+        if (fee >= BAND_1)
+        {
+            classification = "Full Semester";
+        }
+        else if (fee >= BAND_2)
+        {
+            classification = "Half Semester";
+        }
+        else if (fee >= BAND_3)
+        {
+            classification = "Short Stay";
+        }
+        else
+        {
+            classification = "Transit";
+        }
+
+        cout << left << setw(10) << num
+            << setw(15) << id[i]
+            << setw(20) << name[i]
+            << right << setw(15) << fixed << setprecision(2) << fee
+            << "  " << left << setw(20) << classification << endl;
+
+        num++;
+    }
+
+    line(80);
 }
