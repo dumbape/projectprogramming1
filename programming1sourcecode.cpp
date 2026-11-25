@@ -24,11 +24,6 @@ string capitalizer(string tempstr);
 */
 void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nights)[MAX], int &count);
 void displaymenu();
-void recordtable(string(id)[MAX], string(name)[MAX], char (block)[MAX], int (nights)[MAX]);
-/*
-    These are the two functions I'm adding for searching student records and displaying all the records.
-    I'm keeping them separate so that each function can handle its own job when main() calls it.
-*/
 int searchstudent(const string id[], int count, string searchID);
 void studentinfo(const string id[], const string name[], const char code[],
     const int qty[], int count);
@@ -256,26 +251,7 @@ void displaymenu() {
 
 }
 
-/*
-    I noticed that recordtable() and studentinfo() both display the student records.
-    Since studentinfo() already handles this and uses count to avoid going through empty array positions,
-    I don't think we need to call recordtable() anymore.
-    I've left Adam's original function here for now so we can decide together whether to remove it later.
-*/
-void recordtable(string(id)[MAX], string(name)[MAX], char (block)[MAX], int (nights)[MAX]) {
-    int recordno = 0;
-    line(86);
-    cout << endl;
-    cout << left << setw(5) << "NO" << setw(15) << "STUDENT ID" << setw(30) << "STUDENT NAME" << setw(5) << "BLOCK" << right << setw(15) << "TOTAL NIGHTS" << setw(15) << "AMOUNT (RM)" << endl;
-    line(86);
-    while (id[recordno] != "" || recordno < MAX) {
-        cout << left << fixed << setprecision(2) << setw(5) << recordno + 1 << setw(15) << id[recordno] << setw(30) << name[recordno] << setw(5) << block[recordno] << right << setw(15) << nights[recordno] << setw(15) << nights[recordno] * RATE
-            << endl;
-        recordno++;
-    }
-    line(86);
-    cout << endl;
-}
+
 
 /*
     This function goes through the student IDs one by one to find the student we're looking for.
