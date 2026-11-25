@@ -49,18 +49,17 @@ int main() {
     
         while (menuvalue!= 6){
             string searchID;
-            int option;
             bool validoption;
             displaymenu();
             do {
                 //validation
                 cout << "Please select your menu options: ";
-                cin >> option;
+                cin >> menuvalue;
 
                 validoption = !cin.fail();
 
                 if (validoption) {
-                    if (option < 0 || option > 6 || cin.peek() != '\n')
+                    if (menuvalue < 0 || menuvalue > 6 || cin.peek() != '\n')
                         validoption = false;
                 }
 
@@ -69,7 +68,7 @@ int main() {
                     cin.clear();
                 }
 
-                cin.ignore(100000, '\n');
+                cin.ignore(10000, '\n');
 
             } while (!validoption);
             switch (menuvalue)
@@ -349,70 +348,48 @@ void studentinfo(const string id[], const string name[], const char code[],
     actually been added. It calculates the total and average nights stayed,
     and identifies the student records with the highest and lowest nights.
 */
-void sumreport(const string id[], const string name[],
-    const int qty[], int count)
-{
-    if (count == 0)
-    {
-        cout << "No records found" << endl;
+void sumreport(const string id[], const string name[], const int qty[], int count) {
+    if (count == 0) {
+        cout << "\nNo records found for summary report.\n\n";
         return;
     }
 
-    int totalNights = 0;
-    float averageNights = 0.0;
-    int highestNights = qty[0];
-    int lowestNights = qty[0];
+    float totalFee = 0.0f;
+    int highestIdx = 0;
+    int lowestIdx = 0;
+    float highestFee = qty[0] * RATE;
+    float lowestFee = qty[0] * RATE;
 
-    for (int i = 0; i < count; i++)
-    {
-        totalNights = totalNights + qty[i];
+    for (int i = 0; i < count; i++) {
+        float fee = qty[i] * RATE;
+        totalFee += fee;
 
-        if (qty[i] > highestNights)
-        {
-            highestNights = qty[i];
+        if (fee > highestFee) {
+            highestFee = fee;
+            highestIdx = i;
         }
-
-        if (qty[i] < lowestNights)
-        {
-            lowestNights = qty[i];
-        }
-    }
-
-    averageNights = static_cast<float>(totalNights) / count;
-    cout << "\n";
-    line(30);
-    cout << "SUMMARY REPORT\n";
-     line(30);
-
-    cout << "Total number of students: " << count << endl;
-    cout << "Total nights stayed: " << totalNights << endl;
-    cout << "Average nights stayed: " << fixed << setprecision(2)
-        << averageNights << endl;
-    line(30);
-    cout << "Highest nights stayed: " << highestNights << endl;
-    cout << "Lowest nights stayed: " << lowestNights << endl;
-    cout << "Student(s) with the highest nights: ";
-    for (int i = 0; i < count; i++)
-    {
-        if (qty[i] == highestNights)
-        {
-            cout << id[i] << " - " << name[i]
-                << " (" << qty[i] << " nights)" << endl;
+        if (fee < lowestFee) {
+            lowestFee = fee;
+            lowestIdx = i;
         }
     }
 
-    cout << "Student(s) with the lowest nights: ";
+    float avgFee = totalFee / count;
 
-    for (int i = 0; i < count; i++)
-    {
-        if (qty[i] == lowestNights)
-        {
-            cout << id[i] << " - " << name[i]
-                << " (" << qty[i] << " nights)" << endl;
-        }
-    }
+    cout << "\nSUMMARY REPORT\n";
+    cout << left << setw(24) << "Number of bookings" << ": " << count << endl;
+    cout << left << setw(24) << "Total Fee (RM)" << ": " << fixed << setprecision(2) << totalFee << endl;
+    cout << left << setw(24) << "Average Fee (RM)" << ": " << fixed << setprecision(2) << avgFee << endl;
+    cout << endl;
+    cout << left << setw(10) << "Highest" << ": " << name[highestIdx]
+         << " (" << qty[highestIdx] << " -> " << fixed << setprecision(2) << highestFee << ")" << endl;
+    cout << left << setw(10) << "Lowest" << ": " << name[lowestIdx]
+         << " (" << qty[lowestIdx] << " -> " << fixed << setprecision(2) << lowestFee << ")" << endl;
     cout << endl;
 }
+
+
+
 
 /*
     I changed the previous classreport() function to follow our current
