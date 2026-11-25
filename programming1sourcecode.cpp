@@ -23,7 +23,7 @@ string capitalizer(string tempstr);
     I'm passing it by reference so that when a new record is saved, the updated number will also be available in main().
 */
 void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nights)[MAX], int &count);
-void displaymenu();
+int displaymenu();
 void recordtable(string(id)[MAX], string(name)[MAX], char (block)[MAX], int (nights)[MAX]);
 /*
     These are the two functions I'm adding for searching student records and displaying all the records.
@@ -45,46 +45,64 @@ int main() {
         char code[MAX] = {};
         int qty[MAX] = {};
         int count = 0;
+        int menuvalue = 0;
+    
+        while (menuvalue!= 6){
+            string searchID;
+            menuvalue = displaymenu();
+            switch (menuvalue)
+            {
+            default:
+                break;
+            case 1:
+                addrecord(id, name, code, qty, count);
+                break;
+           case 2:
+                cout << "\nDISPLAY ALL RECORDS\n\n";
+                studentinfo(id, name, code, qty, count);
+                break;
+           case 3:{
+                cout << "\nEnter a student ID to search: ";
+                cin >> searchID;
+                searchID = capitalizer(searchID);
+                int index = searchstudent(id, count, searchID);
 
-        addrecord(id, name, code, qty, count);
-        addrecord(id, name, code, qty, count);
+                if (index == -1)
+                cout << "Student not found.\n\n";
+                    else{
+                cout << "STUDENT FOUND AT INDEX " << index+1 << ".\n";
+                line(90);
+                cout << left << setw(4) << "NO."
+                << left << setw(15) << "STUDENT ID"
+                << setw(30) << "STUDENT NAME"
+                << setw(10) << "BLOCK"
+                << setw(15) << "NIGHTS STAYED"
+                << right << setw(15) << "FEE (RM)" << endl;
+                 line(90);
+                cout << left << setw(4) << index+1
+                << left << setw(15) << id[index]
+                << setw(30) << name[index]
+                << setw(10) << code[index]
+                << setw(15) << qty[index]
+                << right << fixed << setprecision(2) << setw(15) << qty[index] * RATE << endl;
+                line(90);
+                cout << "\n";
+                }
+               
+                break;
+           }
 
-        cout << "\nDISPLAY ALL RECORDS\n";
-        studentinfo(id, name, code, qty, count);
+           case 4:
+                sumreport(id, name, qty, count);
+                break;
+           case 5:
+                classreport(id, name, qty, count);
+                break;
+            
 
-        cout << "\n";
-        sumreport(id, name, qty, count);
-
-        classreport(id, name, qty, count);
-
-        string searchID;
-        cout << "\nEnter a student ID to search: ";
-        cin >> searchID;
-        searchID = capitalizer(searchID);
-
-        int index = searchstudent(id, count, searchID);
-
-        if (index == -1)
-            cout << "Student not found.\n";
-        else{
-            cout << "STUDENT FOUND AT INDEX " << index+1 << ".\n";
-            cout << left << setw(4) << "NO."
-            << left << setw(15) << "STUDENT ID"
-            << setw(30) << "STUDENT NAME"
-            << setw(10) << "BLOCK"
-            << setw(15) << "NIGHTS STAYED"
-            << right << setw(15) << "FEE (RM)" << endl;
-            cout << left << setw(4) << index+1
-            << left << setw(15) << id[index]
-            << setw(30) << name[index]
-            << setw(10) << code[index]
-            << setw(15) << qty[index]
-            << right << fixed << setprecision(2) << setw(15) << qty[index] * RATE << endl;
+            }
         }
-            
-            
-
-
+        cout << "The program has ended. Goodbye and have a good day\n";
         return 0;
     }
 
@@ -101,13 +119,14 @@ string capitalizer(string tempstr){
     return tempstr;
 }
 
+
 /*
     function to print out line borders (too lazy to repeatedly write the same line function over and over again)
     the programmer can insert the width of the lines so that it will fit whatever need they have.
 */
 void line(int i) {
-    cout << setfill('-') << setw(i) << "\n"
-        << setfill(' ');
+
+    cout  << setw(i) << setfill('-') << ""<<"\n" << setfill(' ');
 }
 
 void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nights)[MAX], int &count) {
@@ -126,7 +145,7 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
     //checking whether the array has already achieved max capacity
     //if true then it will exit this function with a message
     if (id[MAX - 1] != "") {
-        cout << "\nFULL CAPACITY\n";
+        cout << "\nFULL CAPACITY\n\n";
         return;
     }
     //checking free spaces
@@ -194,10 +213,11 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
     Adam's arraycounter still finds the next empty position, while count tells the other functions how many records are stored.
     */
     count = count + 1;
+    cout << "Record has been inserted\n\n";
 
 }
-void displaymenu() {
-
+int displaymenu() {
+    int option;
     string menuarray[6] = {
         "ADD A RECORD",
         "DISPLAY ALL RECORDS",
@@ -213,6 +233,29 @@ void displaymenu() {
         cout << setw(3) << left << i + 1 << "." << menuarray[i] << "\n";
     }
     line(30);
+    bool validoption;
+    do {
+        //validation
+        cout << "Please select your menu options: ";
+        cin >> option;
+
+        validoption = !cin.fail();
+
+        if (validoption) {
+            if (option < 0 || cin.peek() != '\n')
+                validoption = false;
+        }
+
+        if (!validoption) {
+            cout << "Try again. ";
+            cin.clear();
+        }
+
+        cin.ignore(100000, '\n');
+
+    } while (!option);
+    return option;
+
 }
 
 /*
@@ -272,14 +315,15 @@ void studentinfo(const string id[], const string name[], const char code[],
         return;
     }
 
-    cout << "\nSTUDENT BOOKING RECORDS\n";
+    cout << "\nSTUDENT BOOKING RECORDS\n\n";
+    line(90);
     cout << left << setw(4) << "NO."
         << left << setw(15) << "STUDENT ID"
         << setw(30) << "STUDENT NAME"
         << setw(10) << "BLOCK"
         << setw(15) << "NIGHTS STAYED"
         << right << setw(15) << "FEE (RM)" << endl;
-
+    line(90);
     float fee;
     int i = 0;
 
@@ -295,7 +339,8 @@ void studentinfo(const string id[], const string name[], const char code[],
 
         i = i + 1;
     }
-
+    line(90);
+    cout << "\n";
 
 }
 
@@ -335,20 +380,19 @@ void sumreport(const string id[], const string name[],
     }
 
     averageNights = static_cast<float>(totalNights) / count;
-
-    cout << "\nSUMMARY REPORT\n";
-    line(50);
+    cout << "\n";
+    line(30);
+    cout << "SUMMARY REPORT\n";
+     line(30);
 
     cout << "Total number of students: " << count << endl;
     cout << "Total nights stayed: " << totalNights << endl;
     cout << "Average nights stayed: " << fixed << setprecision(2)
         << averageNights << endl;
-
+    line(30);
     cout << "Highest nights stayed: " << highestNights << endl;
     cout << "Lowest nights stayed: " << lowestNights << endl;
-
-    cout << "\nStudent(s) with the highest nights:\n";
-
+    cout << "Student(s) with the highest nights: ";
     for (int i = 0; i < count; i++)
     {
         if (qty[i] == highestNights)
@@ -358,7 +402,7 @@ void sumreport(const string id[], const string name[],
         }
     }
 
-    cout << "\nStudent(s) with the lowest nights:\n";
+    cout << "Student(s) with the lowest nights: ";
 
     for (int i = 0; i < count; i++)
     {
@@ -368,6 +412,7 @@ void sumreport(const string id[], const string name[],
                 << " (" << qty[i] << " nights)" << endl;
         }
     }
+    cout << endl;
 }
 
 /*
@@ -381,7 +426,7 @@ void classreport(const string id[], const string name[],
 {
     if (count == 0)
     {
-        cout << "\nNo records found.\n";
+        cout << "\nNo records found.\n\n";
         return;
     }
 
@@ -390,17 +435,16 @@ void classreport(const string id[], const string name[],
     int num = 1;
 
     cout << "\nCLASSIFICATION REPORT\n";
-    line(80);
+    line(90);
 
-    cout << left << setw(10) << "NO"
+    cout << left << setw(4) << "NO"
         << setw(15) << "STUDENT ID"
-        << setw(20) << "STUDENT NAME"
+        << setw(30) << "STUDENT NAME"
         << right << setw(15) << "FEE (RM)"
         << "  " << left << setw(20) << "CLASSIFICATION"
         << endl;
 
-    line(80);
-    cout << endl;
+    line(90);
 
     for (int i = 0; i < count; i++)
     {
@@ -423,14 +467,14 @@ void classreport(const string id[], const string name[],
             classification = "Transit";
         }
 
-        cout << left << setw(10) << num
+        cout << left << setw(4) << num
             << setw(15) << id[i]
-            << setw(20) << name[i]
+            << setw(30) << name[i]
             << right << setw(15) << fixed << setprecision(2) << fee
             << "  " << left << setw(20) << classification << endl;
 
         num++;
     }
 
-    line(80);
+    line(90);
 }
