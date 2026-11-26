@@ -100,23 +100,23 @@ int main() {
                 else
                     classification = "Transit";
 
-                line(110);
+                line(120);
                 cout << left << setw(4) << "NO."
                 << left << setw(15) << "STUDENT ID"
-                << setw(30) << "STUDENT NAME"
+                << setw(40) << "STUDENT NAME"
                 << setw(10) << "BLOCK"
                 << setw(15) << "NIGHTS STAYED"
                 << right << setw(15) << "FEE (RM)"
                 << "  " << left << setw(20) << "CLASSIFICATION" << endl;
-                 line(110);
+                 line(120);
                 cout << left << setw(4) << index+1
                 << left << setw(15) << id[index]
-                << setw(30) << name[index]
+                << setw(40) << name[index]
                 << setw(10) << code[index]
                 << setw(15) << qty[index]
                 << right << fixed << setprecision(2) << setw(15) << qty[index] * RATE
                 << "  " << left << setw(20) << classification << endl;
-                line(110);
+                line(120);
                 cout << "\n";
                 }
                
@@ -305,14 +305,14 @@ void studentinfo(const string id[], const string name[], const char code[],
     }
 
     cout << "\nSTUDENT BOOKING RECORDS\n\n";
-    line(90);
+    line(100);
     cout << left << setw(4) << "NO."
         << left << setw(15) << "STUDENT ID"
-        << setw(30) << "STUDENT NAME"
+        << setw(40) << "STUDENT NAME"
         << setw(10) << "BLOCK"
         << setw(15) << "NIGHTS STAYED"
         << right << setw(15) << "FEE (RM)" << endl;
-    line(90);
+    line(100);
     float fee;
     int i = 0;
 
@@ -321,14 +321,14 @@ void studentinfo(const string id[], const string name[], const char code[],
         fee = qty[i] * RATE;
         cout<< left << setw(4) << i+1
             << left << setw(15) << id[i]
-            << setw(30) << name[i]
+            << setw(40) << name[i]
             << setw(10) << code[i]
             << setw(15) << qty[i]
             << right << fixed << setprecision(2) << setw(15) << fee << endl;
 
         i = i + 1;
     }
-    line(90);
+    line(100);
     cout << "\n";
 
 }
@@ -404,16 +404,16 @@ void classreport(const string id[], const string name[],
     int num = 1;
 
     cout << "\nCLASSIFICATION REPORT\n";
-    line(90);
+    line(100);
 
     cout << left << setw(4) << "NO"
         << setw(15) << "STUDENT ID"
-        << setw(30) << "STUDENT NAME"
+        << setw(40) << "STUDENT NAME"
         << right << setw(15) << "FEE (RM)"
         << "  " << left << setw(20) << "CLASSIFICATION"
         << endl;
 
-    line(90);
+    line(100);
 
     for (int i = 0; i < count; i++)
     {
@@ -438,12 +438,12 @@ void classreport(const string id[], const string name[],
 
         cout << left << setw(4) << num
             << setw(15) << id[i]
-            << setw(30) << name[i]
+            << setw(40) << name[i]
             << right << setw(15) << fixed << setprecision(2) << fee
             << "  " << left << setw(20) << classification << endl;
 
         num++;
     }
 
-    line(90);
+    line(100);
 }
