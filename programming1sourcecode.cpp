@@ -68,8 +68,6 @@ int main() {
             } while (!validoption);
             switch (menuvalue)
             {
-            default:
-                break;
             case 1:
                 addrecord(id, name, code, qty, count);
                 break;
@@ -129,7 +127,8 @@ int main() {
            case 5:
                 classreport(id, name, qty, count);
                 break;
-            
+            default:
+                break;
 
             }
         }
