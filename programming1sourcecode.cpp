@@ -87,21 +87,36 @@ int main() {
                 cout << "Student not found.\n\n";
                     else{
                 cout << "STUDENT FOUND AT INDEX " << index+1 << ".\n";
-                line(90);
+                
+                float fee = qty[index] * RATE;
+                string classification;
+
+                if (fee >= BAND_1)
+                    classification = "Full Semester";
+                else if (fee >= BAND_2)
+                    classification = "Half Semester";
+                else if (fee >= BAND_3)
+                    classification = "Short Stay";
+                else
+                    classification = "Transit";
+
+                line(110);
                 cout << left << setw(4) << "NO."
                 << left << setw(15) << "STUDENT ID"
                 << setw(30) << "STUDENT NAME"
                 << setw(10) << "BLOCK"
                 << setw(15) << "NIGHTS STAYED"
-                << right << setw(15) << "FEE (RM)" << endl;
-                 line(90);
+                << right << setw(15) << "FEE (RM)"
+                << "  " << left << setw(20) << "CLASSIFICATION" << endl;
+                 line(110);
                 cout << left << setw(4) << index+1
                 << left << setw(15) << id[index]
                 << setw(30) << name[index]
                 << setw(10) << code[index]
                 << setw(15) << qty[index]
-                << right << fixed << setprecision(2) << setw(15) << qty[index] * RATE << endl;
-                line(90);
+                << right << fixed << setprecision(2) << setw(15) << qty[index] * RATE
+                << "  " << left << setw(20) << classification << endl;
+                line(110);
                 cout << "\n";
                 }
                
