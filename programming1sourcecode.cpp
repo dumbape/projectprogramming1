@@ -203,7 +203,7 @@ void addrecord(string(&id)[MAX], string(&name)[MAX], char(&block)[MAX], int(&nig
     if (tempchar >= 'a' && tempchar <= 'z')
         tempchar = tempchar - 32;
         if (tempchar > 'E' || tempchar < 'A') {
-            cin.ignore(100000, '\n');
+            cin.ignore(10000000000, '\n');
             cout << "Try again. ";
         }
     } while (tempchar > 'E' || tempchar < 'A');
